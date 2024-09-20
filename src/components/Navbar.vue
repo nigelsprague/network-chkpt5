@@ -18,10 +18,10 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-sm navbar-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="/img/cw-logo.png" height="45" />
+        <h2><i class="mdi mdi-web"></i>Network</h2>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -31,7 +31,7 @@ function toggleTheme() {
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
+          <router-link :to="{ name: 'About' }" class="btn lighten-30 selectable text-uppercase">
             About
           </router-link>
         </li>
@@ -51,6 +51,11 @@ function toggleTheme() {
 <style scoped>
 a:hover {
   text-decoration: none;
+}
+
+.navbar {
+  background: rgb(0,162,195);
+  background: linear-gradient(27deg, rgba(0,162,195,1) 0%, rgba(255,255,255,1) 50%, rgba(111,238,255,1) 100%);
 }
 
 .nav-link {
