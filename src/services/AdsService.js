@@ -9,6 +9,12 @@ class AdsService{
     AppState.ads = newAds
   }
 
+  async getBannerAds() {
+    const res = await api.get('api/ads?count=1')
+    const newBanners = res.data.map(ad => new Ad(ad))
+    AppState.bannerAds = newBanners
+  }
+
 }
 
 export const adsService = new AdsService()

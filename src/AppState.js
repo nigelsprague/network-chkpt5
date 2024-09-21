@@ -11,6 +11,7 @@ export const AppState = reactive({
   account: null,
   /** @type {Ad[]} */
   ads: [],
+  bannerAds: [],
   /** @type {Post[]} */
   posts: [],
   currentPage: 0,
