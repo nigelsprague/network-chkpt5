@@ -34,10 +34,10 @@ async function createPost() {
 <template>
   <div v-if="account" class="card p-3 my-3">
     <section class="row">
-      <div class="col d-flex mb-3">
+      <div class="mb-3">
         <img class="img-fluid account-img" :src="account.picture" :alt="account.name" :title="account.name">
       </div>
-      <div class="col-10">
+      <div class="col">
         <form @submit.prevent="createPost()">
           <textarea v-model="editablePostData.body" class="w-100 mb-3" name="" id="" placeholder="Share what's new..." rows="4"></textarea>
           <div class="d-flex justify-content-between">

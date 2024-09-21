@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState';
+import PageNavigation from '@/components/globals/PageNavigation.vue';
 import PostCard from '@/components/globals/PostCard.vue';
 import PostForm from '@/components/globals/PostForm.vue';
 import { adsService } from '@/services/AdsService';
@@ -35,34 +36,19 @@ async function getAllPosts() {
     logger.log(error)
   }
 }
-
-async function changePage() {
-  try {
-    logger.log('changing page')
-  }
-  catch (error){
-    Pop.meow(error);
-    logger.log(error)
-  }
-}
 </script>
 
 <template>
   <div class="container">
     <section class="row">
-      <div class="col-9">
+      <div class="col-md-9">
         <PostForm />
         <div v-for="post in posts" :key="post.id">
           <PostCard :postProp="post" />
         </div>
-        <div class="d-flex gap 4 justify-content-evenly
-         align-items-center px-5 my-3">
-          <button @click="changePage()" class="btn btn-outline-info">Previous</button>
-          <span>Page {{  }} of {{  }}</span>
-          <button @click="changePage()" class="btn btn-outline-info">Next</button>
-        </div>
+        <PageNavigation />
       </div>
-      <div class="col-3">
+      <div class="col-3 ads">
         <div v-for="ad in ads" :key="ad.title" class="mt-3 mb-5">
           <img class="img-fluid" :src="ad.tall" :alt="ad.title">
         </div>
@@ -72,4 +58,9 @@ async function changePage() {
 </template>
 
 <style scoped lang="scss">
+@media (max-width: 700px) {
+  .ads {
+    display: none;
+  }
+}
 </style>

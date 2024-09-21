@@ -7,18 +7,27 @@ class PostsService{
   // setActiveProfile(postId) {
   //   AppState.activeProfile = profile
   // }
+
+  async changePage(pageNum) {
+    const res = await api.get(`api/posts?page=${pageNum}`)
+    
+  }
+
   getProfilePosts() {
     throw new Error('Method not implemented.')
   }
+
   async createPost(postData) {
     const res = await api.post('api/posts', postData)
     const newPost = new Post(res.data)
     AppState.posts.push(newPost)
   }
+
   async likePost(postId) {
     const res = await api.post(`api/posts/${postId}/like`, postId)
     logger.log(res.data)
   }
+
   async getAllPosts() {
     const res = await api.get('api/posts')
     logger.log(res.data)
