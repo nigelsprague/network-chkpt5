@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState';
 import PostCard from '@/components/globals/PostCard.vue';
+import PostForm from '@/components/globals/PostForm.vue';
 import { adsService } from '@/services/AdsService';
 import { postsService } from '@/services/PostsService';
 import { logger } from '@/utils/Logger';
@@ -34,14 +35,31 @@ async function getAllPosts() {
     logger.log(error)
   }
 }
+
+async function changePage() {
+  try {
+    logger.log('changing page')
+  }
+  catch (error){
+    Pop.meow(error);
+    logger.log(error)
+  }
+}
 </script>
 
 <template>
   <div class="container">
     <section class="row">
       <div class="col-9">
+        <PostForm />
         <div v-for="post in posts" :key="post.id">
           <PostCard :postProp="post" />
+        </div>
+        <div class="d-flex gap 4 justify-content-evenly
+         align-items-center px-5 my-3">
+          <button @click="changePage()" class="btn btn-outline-info">Previous</button>
+          <span>Page {{  }} of {{  }}</span>
+          <button @click="changePage()" class="btn btn-outline-info">Next</button>
         </div>
       </div>
       <div class="col-3">

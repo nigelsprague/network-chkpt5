@@ -4,7 +4,7 @@ import { Post } from '@/models/Post';
 import { postsService } from '@/services/PostsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 const account = computed(() => AppState.account)
 
@@ -21,6 +21,16 @@ async function likePost(postId) {
     logger.log(error)
   }
 }
+
+// async function setActiveProfile() {
+//   try {
+//     await postsService.setActiveProfile(props.postProp)
+//   }
+//   catch (error){
+//     Pop.meow(error);
+//     logger.log(error)
+//   }
+// }
 </script>
 
 
