@@ -4,13 +4,23 @@ import { Post } from "@/models/Post"
 import { AppState } from "@/AppState"
 
 class PostsService{
+  changeSearchPage(pageNum, postQuery) {
+    throw new Error('Method not implemented.')
+  }
   // setActiveProfile(postId) {
   //   AppState.activeProfile = profile
   // }
 
   async changePage(pageNum) {
     const res = await api.get(`api/posts?page=${pageNum}`)
-    
+    this.handleResData(res.data)
+  }
+
+  handleResData(resData) {
+    const newPosts = resData.posts.map(post => new Post(post))
+    AppState.posts = newPosts
+    AppState.currentPage = resData.page
+    AppState.totalPages = resData.totalPages
   }
 
   getProfilePosts() {
@@ -31,8 +41,7 @@ class PostsService{
   async getAllPosts() {
     const res = await api.get('api/posts')
     logger.log(res.data)
-    const newPosts = res.data.posts.map(post => new Post(post))
-    AppState.posts = newPosts
+    this.handleResData(res.data)
   }
 
 }

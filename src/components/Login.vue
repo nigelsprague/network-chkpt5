@@ -16,7 +16,7 @@ async function logout() {
 
 <template>
   <span class="navbar-text">
-    <button class="btn selectable lighten-30 text-uppercase my-2 my-lg-0" @click="login" v-if="!identity">
+    <button class="btn selectable lighten-30 text-uppercase text-success my-2 my-lg-0" @click="login" v-if="!identity">
       Login
     </button>
     <div v-else>
