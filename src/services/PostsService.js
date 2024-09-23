@@ -5,7 +5,8 @@ import { AppState } from "@/AppState"
 
 class PostsService{
   async changeProfilePage(pageNum, profileId) {
-    const res = await api.get(`/api/posts?page=${pageNum}&creatorId=${profileId}`)
+    const res = await api.get(`/api/posts?creatorId=${profileId}&page=${pageNum}`)
+    logger.log(res.data)
     this.handleResData(res.data)
   }
   // setPostToEdit(postProp) {
@@ -61,6 +62,7 @@ class PostsService{
   }
     
   async likePost(postId) {
+    AppState.posts
     const res = await api.post(`api/posts/${postId}/like`, postId)
     logger.log(res.data)
     this.handleResData

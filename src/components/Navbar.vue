@@ -31,11 +31,6 @@ function toggleTheme() {
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn lighten-30 selectable text-success text-uppercase">
-            About
-          </router-link>
-        </li>
-        <li>
           <router-link :to="{ name: 'Search' }" class="btn lighten-30 selectable text-success text-uppercase">
             Search
           </router-link>

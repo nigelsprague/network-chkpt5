@@ -9,6 +9,8 @@ import { computed } from 'vue';
 
 
 const account = computed(() => AppState.account)
+const posts = computed(() => AppState.posts)
+
 const props = defineProps({
   postProp: {type: Post, required: true}
 })
@@ -45,9 +47,9 @@ async function setActiveProfile() {
   }
 }
 
-function setPostToEdit() {
-  postsService.setPostToEdit(props.postProp)
-}
+// function setPostToEdit() {
+//   postsService.setPostToEdit(props.postProp)
+// }
 </script>
 
 
@@ -70,8 +72,8 @@ function setPostToEdit() {
             <i class="mdi mdi-dots-horizontal fs-3"></i>
           </button>
           <ul class="dropdown-menu">
-            <li><button @click="setPostToEdit()" class="dropdown-item" data-bs-toggle="modal"
-              data-bs-target="#editModal" type="button">Edit post</button></li>
+            <!-- <li><button @click="setPostToEdit()" class="dropdown-item" data-bs-toggle="modal"
+              data-bs-target="#editModal" type="button">Edit post</button></li> -->
             <li><button @click="deletePost()" class="dropdown-item text-danger" type="button">Delete post</button></li>
           </ul>
         </div>
@@ -79,8 +81,8 @@ function setPostToEdit() {
       <span>{{ postProp.body }}</span>
       <img class="img-fluid post-img my-2" :src="postProp.imgUrl" alt="">
       <div class="text-end fs-5 pe-4">
-        <!-- <i @click="likePost(postProp.id)" role="button" v-if="postProp.likeIds == account.id" class="mdi mdi-heart me-1"></i> -->
-        <i @click="likePost(postProp.id)" role="button"   class="mdi mdi-heart-outline me-1"></i>
+        <i @click="likePost(postProp.id)" v-if="postProp" role="button" class="mdi mdi-heart me-1"></i>
+        <i @click="likePost(postProp.id)" v-else role="button" class="mdi mdi-heart-outline me-1"></i>
         <span>{{ postProp.likes.length }}</span>
       </div>
     </section>

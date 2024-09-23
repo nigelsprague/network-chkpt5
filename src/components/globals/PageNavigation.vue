@@ -4,16 +4,20 @@ import { postsService } from '@/services/PostsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 
 const currentPage = computed(() => AppState.currentPage)
 const totalPages = computed(() => AppState.totalPages)
 const profile = computed(() => AppState.activeProfile)
+const route = useRoute()
 
 async function changePage(pageNum) {
   try {
     if (AppState.postQuery == '') {
       await postsService.changeHomePage(pageNum)
+    } else if(profile.value.id == route.params.creatorId) {
+      await postsService.changeProfilePage(pageNum, profile.value.id)
     } else {
       await postsService.changeSearchPage(pageNum, AppState.postQuery)
     }
