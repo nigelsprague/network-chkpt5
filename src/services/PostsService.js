@@ -4,38 +4,71 @@ import { Post } from "@/models/Post"
 import { AppState } from "@/AppState"
 
 class PostsService{
-  changeSearchPage(pageNum, postQuery) {
-    throw new Error('Method not implemented.')
+  async changeProfilePage(pageNum, profileId) {
+    const res = await api.get(`/api/posts?page=${pageNum}&creatorId=${profileId}`)
+    this.handleResData(res.data)
   }
-  // setActiveProfile(postId) {
-  //   AppState.activeProfile = profile
+  // setPostToEdit(postProp) {
+  //   throw new Error('Method not implemented.')
   // }
+  // editPost(postData) {
+  //   throw new Error('Method not implemented.')
+  // }
+  async deletePost(postId) {
+    const res = await api.delete(`/api/posts/${postId}`)
+    const postIndex = AppState.posts.findIndex(post => post.id == postId)
+    AppState.posts.splice(postIndex, 1)
+  }
 
-  async changePage(pageNum) {
-    const res = await api.get(`api/posts?page=${pageNum}`)
+  clearPosts() {
+    AppState.posts = []
+    AppState.currentPage = 0
+    AppState.totalPages = 0
+  }
+
+  clearSearchQuery() {
+    AppState.postQuery = ''
+  }
+
+  async searchPosts(postQuery) {
+    const res = await api.get(`/api/posts?query=${postQuery}`)
+    AppState.postQuery = postQuery
     this.handleResData(res.data)
   }
 
+  async changeSearchPage(pageNum, postQuery) {
+    const res = await api.get(`api/posts?page=${pageNum}&query=${postQuery}`)
+    this.handleResData(res.data)
+  }
+    
+  async changeHomePage(pageNum) {
+    const res = await api.get(`api/posts?page=${pageNum}`)
+    this.handleResData(res.data)
+  }
+    
   handleResData(resData) {
     const newPosts = resData.posts.map(post => new Post(post))
-    AppState.posts = newPosts
-    AppState.currentPage = resData.page
-    AppState.totalPages = resData.totalPages
+      AppState.posts = newPosts
+      AppState.currentPage = resData.page
+      AppState.totalPages = resData.totalPages
   }
-
-  getProfilePosts() {
-    throw new Error('Method not implemented.')
-  }
-
+    
   async createPost(postData) {
     const res = await api.post('api/posts', postData)
     const newPost = new Post(res.data)
     AppState.posts.push(newPost)
+    this.handleResData(res.data)
   }
-
+    
   async likePost(postId) {
     const res = await api.post(`api/posts/${postId}/like`, postId)
     logger.log(res.data)
+    this.handleResData
+  }
+
+  async getPostsByCreatorId(profileId) {
+    const res = await api.get(`api/profiles/${profileId}/posts`)
+    this.handleResData(res.data)
   }
 
   async getAllPosts() {

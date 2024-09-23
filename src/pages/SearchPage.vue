@@ -1,14 +1,27 @@
 <script setup>
 import { AppState } from '@/AppState';
-import PageNavigation from '@/components/globals/PageNavigation.vue';
-import PostCard from '@/components/globals/PostCard.vue';
-import PostForm from '@/components/globals/PostForm.vue';
 import { adsService } from '@/services/AdsService';
 import { postsService } from '@/services/PostsService';
 import { logger } from '@/utils/Logger';
 import Pop from '@/utils/Pop';
 import { computed, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
+async function searchPosts() {
+  try {
+    await postsService.searchPosts(editableQuery.value)
+  }
+  catch (error){
+    Pop.meow(error);
+    logger.error(error)
+  }
+}
+
+onUnmounted(() => {
+  postsService.clearSearchQuery()
+})
+
+const editableQuery = ref('')
 const ads = computed(() => AppState.ads)
 const banners = computed(() => AppState.bannerAds)
 const posts = computed(() => AppState.posts)
@@ -16,12 +29,8 @@ const posts = computed(() => AppState.posts)
 onMounted(() => {
   getAds()
   getBannerAds()
-  getAllPosts()
 })
 
-onUnmounted(() => {
-  postsService.clearPosts()
-})
 
 async function getAds() {
   try {
@@ -42,26 +51,24 @@ async function getBannerAds() {
     logger.log(error)
   }
 }
-
-async function getAllPosts() {
-  try {
-    await postsService.getAllPosts()
-  }
-  catch (error){
-    Pop.meow(error);
-    logger.log(error)
-  }
-}
 </script>
+
 
 <template>
   <div class="container">
     <section class="row">
       <div v-for="banner in banners" :key="banner.title" class="">
     <img class="img-fluid" :src="banner.banner" :alt="banner.title">
+    <div class="col mt-3">
+    <form @submit.prevent="searchPosts()">
+      <div class="d-flex">
+        <input v-model="editableQuery" type="text" class="form-control flex-grow-1" name="query" id="query" placeholder="Show me..." required>
+        <button class="btn btn-outline-success ms-2" type="submit"><i class="mdi mdi-magnify"></i></button>
+      </div>
+    </form>
+  </div>
   </div>
       <div class="col-md-9">
-        <PostForm />
         <div v-for="post in posts" :key="post.id">
           <PostCard :postProp="post" />
         </div>
@@ -91,7 +98,8 @@ async function getAllPosts() {
   </div>
 </template>
 
-<style scoped lang="scss">
+
+<style lang="scss" scoped>
 @media (max-width: 700px) {
   .ads {
     display: none;

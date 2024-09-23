@@ -1,7 +1,6 @@
 import { reactive } from 'vue'
-import { Ad } from './models/Ad.js'
-import { Post } from './models/Post.js'
-import { Account } from './models/Account.js'
+
+
 
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
@@ -9,15 +8,17 @@ export const AppState = reactive({
   identity: null,
   /** @type {import('./models/Account.js').Account} user info from the database*/
   account: null,
-  /** @type {Ad[]} */
+  /** @type {import('./models/Ad.js').Ad[]} */
   ads: [],
   bannerAds: [],
-  /** @type {Post[]} */
+  /** @type {import('./models/Post').Post[]} */
   posts: [],
   currentPage: 0,
   totalPages: 0,
   postQuery: '',
-  /** @type {Account} */
+  /** @type {import('./models/Post').Post} */
+  activePost: null,
+  /** @type {import('./models/Account.js').Account} */
   activeProfile: null
 })
 

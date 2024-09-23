@@ -8,15 +8,25 @@ import { computed } from 'vue';
 
 const currentPage = computed(() => AppState.currentPage)
 const totalPages = computed(() => AppState.totalPages)
+const profile = computed(() => AppState.activeProfile)
 
 async function changePage(pageNum) {
   try {
     if (AppState.postQuery == '') {
-      await postsService.changePage(pageNum)
-    }
-    else {
+      await postsService.changeHomePage(pageNum)
+    } else {
       await postsService.changeSearchPage(pageNum, AppState.postQuery)
     }
+  }
+  catch (error){
+    Pop.meow(error);
+    logger.log(error)
+  }
+}
+
+async function changeProfilePage(pageNum) {
+  try {
+    await postsService.changeProfilePage(pageNum, profile.value.id)
   }
   catch (error){
     Pop.meow(error);
