@@ -86,7 +86,7 @@ async function getPostsByCreatorId() {
             </div>
           </section>
          </div>
-        <div v-if="account.id == route.params.profileId">
+        <div v-if="account?.id == route.params.profileId">
           <PostForm />
         </div>
         <div v-for="post in posts" :key="post.id">

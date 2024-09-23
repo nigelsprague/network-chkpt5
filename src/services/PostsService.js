@@ -57,8 +57,8 @@ class PostsService{
   async createPost(postData) {
     const res = await api.post('api/posts', postData)
     const newPost = new Post(res.data)
-    AppState.posts.push(newPost)
-    this.handleResData(res.data)
+    AppState.posts.unshift(newPost)
+    // this.handleResData(res.data)
   }
     
   async likePost(postId) {

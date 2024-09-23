@@ -14,34 +14,13 @@ const banners = computed(() => AppState.bannerAds)
 const posts = computed(() => AppState.posts)
 
 onMounted(() => {
-  getAds()
-  getBannerAds()
+
   getAllPosts()
 })
 
 onUnmounted(() => {
   postsService.clearPosts()
 })
-
-async function getAds() {
-  try {
-    await adsService.getAds()
-  }
-  catch (error){
-    Pop.meow(error);
-    logger.log(error)
-  }
-}
-
-async function getBannerAds() {
-  try {
-    await adsService.getBannerAds()
-  }
-  catch (error){
-    Pop.meow(error);
-    logger.log(error)
-  }
-}
 
 async function getAllPosts() {
   try {
@@ -52,6 +31,9 @@ async function getAllPosts() {
     logger.log(error)
   }
 }
+
+
+
 </script>
 
 <template>

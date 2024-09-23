@@ -12,14 +12,17 @@ const account = computed(() => AppState.account)
 const posts = computed(() => AppState.posts)
 
 const props = defineProps({
-  postProp: {type: Post, required: true}
+  postProp: { type: Post, required: true }
 })
+
+const haveLiked = computed(() => props.postProp.likeIds.find((id) => id == account.value?.id))
+
 
 async function likePost(postId) {
   try {
     await postsService.likePost(postId)
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -31,7 +34,7 @@ async function deletePost() {
     if (!wantsToDelete) return
     await postsService.deletePost(props.postProp.id)
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -41,7 +44,7 @@ async function setActiveProfile() {
   try {
     await profilesService.setActiveProfile(props.postProp)
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -57,12 +60,14 @@ async function setActiveProfile() {
   <div class="card p-3 my-3">
     <section class="row">
       <div class="d-flex align-items-center mb-3">
-        <router-link :to="{name: 'ProfileDetails', params: {profileId: postProp.creatorId}}" :title="`Go to ${postProp.creator.name}'s Profile Page'`">
-          <img @click="setActiveProfile()" class="img-fluid profile-img me-3" :src="postProp.creator.picture" :alt="postProp.creator.name" :title="`Visit ${postProp.creator.name}'s profile`">
+        <router-link :to="{ name: 'ProfileDetails', params: { profileId: postProp.creatorId } }"
+          :title="`Go to ${postProp.creator.name}'s Profile Page'`">
+          <img @click="setActiveProfile()" class="img-fluid profile-img me-3" :src="postProp.creator.picture"
+            :alt="postProp.creator.name" :title="`Visit ${postProp.creator.name}'s profile`">
         </router-link>
         <div>
           <h6>{{ postProp.creator.name }}</h6>
-          <p>{{ postProp.publishedOn }} 
+          <p>{{ postProp.publishedOn }}
             <i v-if="postProp.creator.graduated" class="mdi mdi-account-school ms-2"></i>
             <i v-else class="mdi mdi-town-hall ms-2"></i>
           </p>
@@ -81,7 +86,7 @@ async function setActiveProfile() {
       <span>{{ postProp.body }}</span>
       <img class="img-fluid post-img my-2" :src="postProp.imgUrl" alt="">
       <div class="text-end fs-5 pe-4">
-        <i @click="likePost(postProp.id)" v-if="postProp" role="button" class="mdi mdi-heart me-1"></i>
+        <i @click="likePost(postProp.id)" v-if="haveLiked" role="button" class="mdi mdi-heart me-1"></i>
         <i @click="likePost(postProp.id)" v-else role="button" class="mdi mdi-heart-outline me-1"></i>
         <span>{{ postProp.likes.length }}</span>
       </div>
@@ -91,13 +96,13 @@ async function setActiveProfile() {
 
 
 <style lang="scss" scoped>
-.profile-img{
+.profile-img {
   height: 65px;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
 }
 
-img{
+img {
   object-fit: cover;
   object-position: center;
 }
