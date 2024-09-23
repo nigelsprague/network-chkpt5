@@ -9,7 +9,6 @@ import { useRoute } from 'vue-router';
 
 const currentPage = computed(() => AppState.currentPage)
 const totalPages = computed(() => AppState.totalPages)
-const profile = computed(() => AppState.activeProfile)
 const route = useRoute()
 
 async function changePage(pageNum) {
@@ -17,11 +16,8 @@ async function changePage(pageNum) {
     if (route.params.profileId) {
       await postsService.changeProfilePage(pageNum, route.params.profileId)
     }
-    // else  {
-    // }
     else {
       await postsService.changeSearchPage(pageNum, AppState.postQuery)
-      // await postsService.changeHomePage(pageNum)
     }
   }
   catch (error) {
@@ -29,16 +25,6 @@ async function changePage(pageNum) {
     logger.log(error)
   }
 }
-
-// async function changeProfilePage(pageNum) {
-//   try {
-//     await postsService.changeProfilePage(pageNum, profile.value.id)
-//   }
-//   catch (error) {
-//     Pop.meow(error);
-//     logger.log(error)
-//   }
-// }
 </script>
 
 

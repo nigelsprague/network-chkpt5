@@ -1,6 +1,5 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
-import { AppState } from './AppState.js';
 import { onMounted } from 'vue';
 import { adsService } from './services/AdsService';
 import Pop from './utils/Pop';
@@ -36,7 +35,7 @@ async function getBannerAds() {
 </script>
 
 <template>
-  <header>
+  <header class="sticky-top">
     <Navbar />
   </header>
   <main>

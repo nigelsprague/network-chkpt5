@@ -11,7 +11,7 @@ async function searchPosts() {
   try {
     await postsService.searchPosts(editableQuery.value)
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.error(error)
   }
@@ -36,7 +36,7 @@ async function getAds() {
   try {
     await adsService.getAds()
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -46,7 +46,7 @@ async function getBannerAds() {
   try {
     await adsService.getBannerAds()
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -58,21 +58,21 @@ async function getBannerAds() {
   <div class="container">
     <section class="row">
       <div v-for="banner in banners" :key="banner.title" class="">
-    <img class="img-fluid" :src="banner.banner" :alt="banner.title">
-    <div class="col mt-3">
-    <form @submit.prevent="searchPosts()">
-      <div class="d-flex">
-        <input v-model="editableQuery" type="text" class="form-control flex-grow-1" name="query" id="query" placeholder="Show me..." required>
-        <button class="btn btn-outline-success ms-2" type="submit"><i class="mdi mdi-magnify"></i></button>
+        <img class="img-fluid w-100" :src="banner.banner" :alt="banner.title">
+        <div class="col mt-3">
+          <form @submit.prevent="searchPosts()">
+            <div class="d-flex">
+              <input v-model="editableQuery" type="text" class="form-control flex-grow-1" name="query" id="query"
+                placeholder="Show me..." required>
+              <button class="btn btn-outline-success ms-2" type="submit"><i class="mdi mdi-magnify"></i></button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
-  </div>
-  </div>
       <div class="col-md-9">
         <div v-for="post in posts" :key="post.id">
           <PostCard :postProp="post" />
         </div>
-        <PageNavigation />
       </div>
       <div class="col-3 ads">
         <div v-for="ad in ads" :key="ad.title" class="mt-3 mb-5">
@@ -92,9 +92,10 @@ async function getBannerAds() {
         </div>
       </div>
     </section>
-  </div>
-  <div v-for="banner in banners" :key="banner.title" class="">
-    <img class="img-fluid" :src="banner.banner" :alt="banner.title">
+    <PageNavigation />
+    <div v-for="banner in banners" :key="banner.title" class="">
+      <img class="img-fluid w-100" :src="banner.banner" :alt="banner.title">
+    </div>
   </div>
 </template>
 

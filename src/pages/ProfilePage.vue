@@ -22,20 +22,20 @@ onMounted(() => {
   getPostsByCreatorId()
 })
 
-watch(() => route.params.profileId, () =>  {
+watch(() => route.params.profileId, () => {
   getProfileById()
   getPostsByCreatorId()
-}, { immediate: true})
+}, { immediate: true })
 
-async function getProfileById(){
-try {
-  const profileId = route.params.profileId
-  await profilesService.getProfileById(profileId)
-}
-catch (error){
-  Pop.meow(error);
-  logger.error(error)
-}
+async function getProfileById() {
+  try {
+    const profileId = route.params.profileId
+    await profilesService.getProfileById(profileId)
+  }
+  catch (error) {
+    Pop.meow(error);
+    logger.error(error)
+  }
 }
 
 async function getPostsByCreatorId() {
@@ -43,7 +43,7 @@ async function getPostsByCreatorId() {
     const profileId = route.params.profileId
     await postsService.getPostsByCreatorId(profileId)
   }
-  catch (error){
+  catch (error) {
     Pop.meow(error);
     logger.log(error)
   }
@@ -54,48 +54,44 @@ async function getPostsByCreatorId() {
 <template>
   <div class="container">
     <section class="row">
-      <div v-for="banner in banners" :key="banner.title" class="">
-        <img class="img-fluid" :src="banner.banner" :alt="banner.title">
-      </div>
-      <div v-if="profile" class="col-md-9">
-        <div class="card p-3 my-3">
-          <section class="row cover-img-bg align-items-center" :style="{backgroundImage: `url(${profile.coverImg})`}">
-            <div class="profile-bg">
-              <div class="d-flex align-items-center mb-3 position-relative">
-                <img class="img-fluid profile-img me-3" :src="profile.picture" :alt="profile.name" :title="profile.name">
-                <i v-if="profile.graduated" class="mdi mdi-account-school ms-2 fs-5 grad-stat-icon"></i>
-            <i v-else class="mdi mdi-town-hall ms-2 fs-5 grad-stat-icon"></i>
-                <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank" class="text-light"
+      <div v-if="profile" class="card my-3">
+        <section class="row cover-img-bg align-items-center" :style="{ backgroundImage: `url(${profile.coverImg})` }">
+          <div class="profile-bg">
+            <div class="d-flex align-items-center p-3 mb-3 position-relative">
+              <img class="img-fluid profile-img me-3" :src="profile.picture" :alt="profile.name" :title="profile.name">
+              <i v-if="profile.graduated" class="mdi mdi-account-school ms-2 fs-5 grad-stat-icon shadow"></i>
+              <i v-else class="mdi mdi-town-hall ms-2 fs-5 grad-stat-icon"></i>
+              <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank" class="text-light"
                 title="Connect with me on linkedin!">
-                  <i class="mdi mdi-linkedin fs-1 ms-3"></i>
-                </a>
-                <a v-if="profile.github" :href="profile.github" target="_blank" class="text-light"
+                <i class="mdi mdi-linkedin fs-1 ms-3 icon-shadow"></i>
+              </a>
+              <a v-if="profile.github" :href="profile.github" target="_blank" class="text-light"
                 title="Connect with me on github!">
-                  <i class="mdi mdi-github fs-1 ms-3"></i>
-                </a>
-                <a v-if="profile.resume" :href="profile.resume" target="_blank" class="text-light"
+                <i class="mdi mdi-github fs-1 ms-3 icon-shadow"></i>
+              </a>
+              <a v-if="profile.resume" :href="profile.resume" target="_blank" class="text-light"
                 title="Check out my resume!">
-                  <i class="mdi mdi-file-account fs-1 ms-3"></i>
-                </a>
-              </div>
+                <i class="mdi mdi-file-account fs-1 ms-3 icon-shadow"></i>
+              </a>
             </div>
-            <div class="px-5">
-              <p>{{ profile.class }}</p>
-              <h2>{{ profile.name }}</h2>
-              <p>{{ profile.bio }}</p>
-            </div>
-          </section>
-         </div>
+          </div>
+          <div class="px-5 text-shadow text-light">
+            <span>{{ profile.class }}</span>
+            <h1>{{ profile.name }}</h1>
+            <p>{{ profile.bio }}</p>
+          </div>
+        </section>
+      </div>
+      <div v-else>
+        <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
+      </div>
+      <div class="col-md-9">
         <div v-if="account?.id == route.params.profileId">
           <PostForm />
         </div>
         <div v-for="post in posts" :key="post.id">
           <PostCard :postProp="post" />
         </div>
-        <PageNavigation />
-      </div>
-      <div v-else>
-        <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
       </div>
       <div class="col-3 ads">
         <div v-for="ad in ads" :key="ad.title" class="mt-3 mb-5">
@@ -103,40 +99,47 @@ async function getPostsByCreatorId() {
         </div>
       </div>
     </section>
-  </div>
-  <div v-for="banner in banners" :key="banner.title" class="">
-    <img class="img-fluid" :src="banner.banner" :alt="banner.title">
+    <PageNavigation />
+    <div v-for="banner in banners" :key="banner.title" class="">
+      <img class="img-fluid w-100" :src="banner.banner" :alt="banner.title">
+    </div>
   </div>
 </template>
 
 
 <style lang="scss" scoped>
-.profile-bg{
-  max-height: 50dvh;
+.cover-img-bg {
   background-size: cover;
-  object-fit: cover;
-  object-position: center;
+  background-position: center;
 }
 
-.profile-img{
+.profile-img {
   height: 115px;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
 }
 
-img{
+img {
   object-fit: cover;
   object-position: center;
 }
 
 .grad-stat-icon {
   position: absolute;
-  left: 3.5em;
-  top: 4em;
+  left: 4em;
+  top: 4.5em;
   background-color: white;
   padding: .25em .5em;
   border-radius: 50%;
   box-shadow: 0 0 2px black;
+}
+
+.icon-shadow {
+  text-shadow: 0 0 1px black;
+}
+
+.text-shadow {
+  text-shadow: 0 0 .5em black;
 }
 
 @media (max-width: 700px) {

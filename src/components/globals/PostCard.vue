@@ -9,7 +9,6 @@ import { computed } from 'vue';
 
 
 const account = computed(() => AppState.account)
-const posts = computed(() => AppState.posts)
 
 const props = defineProps({
   postProp: { type: Post, required: true }

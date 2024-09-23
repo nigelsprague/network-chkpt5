@@ -21,7 +21,7 @@ function toggleTheme() {
   <nav class="navbar navbar-expand-sm navbar-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h2><i class="mdi mdi-web"></i>Network</h2>
+        <h2 class="text-shadow"><i class="mdi mdi-web"></i>Network</h2>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -31,14 +31,14 @@ function toggleTheme() {
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'Search' }" class="btn lighten-30 selectable text-success text-uppercase">
+          <router-link :to="{ name: 'Search' }" class="btn lighten-30 selectable text-light text-shadow text-uppercase">
             Search
           </router-link>
         </li>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <div>
-        <button class="btn text-success" @click="toggleTheme"
+        <button class="btn text-light text-shadow" @click="toggleTheme"
           :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
           <Icon :name="theme == 'light' ? 'weather-sunny' : 'weather-night'" />
         </button>
@@ -54,8 +54,8 @@ a:hover {
 }
 
 .navbar {
-  background: rgb(0,162,195);
-  background: linear-gradient(27deg, rgba(0,162,195,1) 0%, rgba(255,255,255,1) 50%, rgba(111,238,255,1) 100%);
+  background: rgb(0, 162, 195);
+  background: linear-gradient(27deg, rgba(0, 162, 195, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(111, 238, 255, 1) 100%);
 }
 
 .nav-link {
@@ -66,6 +66,10 @@ a:hover {
   border-bottom: 2px solid var(--bs-success);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.text-shadow {
+  text-shadow: 0 0 .5em black;
 }
 
 @media screen and (min-width: 576px) {
