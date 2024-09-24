@@ -85,7 +85,7 @@ async function setActiveProfile() {
       <span>{{ postProp.body }}</span>
       <img class="img-fluid post-img my-2" :src="postProp.imgUrl" alt="">
       <div class="text-end fs-5 pe-4">
-        <i @click="likePost(postProp.id)" v-if="haveLiked" role="button" class="mdi mdi-heart me-1"></i>
+        <i @click="likePost(postProp.id)" v-if="haveLiked" role="button" class="mdi mdi-heart me-1 text-danger"></i>
         <i @click="likePost(postProp.id)" v-else role="button" class="mdi mdi-heart-outline me-1"></i>
         <span>{{ postProp.likes.length }}</span>
       </div>
